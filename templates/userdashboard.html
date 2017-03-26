@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> User Dashboard </title>
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static' , filename='css/materialize.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static' , filename='css/palette.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static' , filename='css/font-awesome.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static' , filename='css/dashboardstyle.css') }}">
+    <link href='https://fonts.googleapis.com/css?family=EB+Garamond' rel='stylesheet' type='text/css'>
+</head>
+
+
+<body>
+
+<div class="page-preloader">
+</div>
+
+<div class="page-wrapper">
+
+    <!-- Navigation Bar -->
+    <div class="navbar-fixed">
+        <nav class="dark-primary-color">
+            <div class="nav-wrapper">
+                <a href="/" class="brand-logo garamond"><strong>proHub</strong></a>
+                <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="#notificationModal" class="modal-trigger"><i class=" fa fa-envelope" aria-hidden="true"
+                                                                              id="dropLogo"
+                                                                              style="color: white; font-size: 28px;"></i><span class="badge white-text">{{ requests | length }}</span></a>
+                    </li>
+
+                    <li style="float:right;"><a href="#" data-activates='dropdown1' class='dropdown-button'>
+                        <img
+                            src="{{ url_for('static' , filename='images/userimage.png') }}"
+                            class="responsive-img circle"
+                            id="userImage"/><span><strong>Howdy {{ user['userName'] }}</strong></span></a>
+                    </li>
+
+                </ul>
+
+
+                <ul id='dropdown1' class='dropdown-content'>
+{#                    <li><a href="#!"><i class=" waves-effect fa fa-camera " aria-hidden="true" id="dropLogo"></i>Change#}
+{#                        Pic</a></li>#}
+{#                    <li><a href="#!"><i class=" waves-effect fa fa-cog " aria-hidden="true"#}
+{#                                        id="dropLogo"></i>Settings</a></li>#}
+{#                    <li class="divider"></li>#}
+
+                    <li><a href="/logout"><i class=" waves-effect fa fa-sign-out " aria-hidden="true" id="dropLogo"></i>Logout</a>
+                    </li>
+                </ul>
+
+
+                <ul class="side-nav" id="mobile-demo">
+                    <li><a class="waves-effect white-text" href="#my-projects"> My Projects </a></li>
+                    <li><a class="waves-effect white-text" href="#projects-shared"> Shared Projects </a></li>
+                    <li><a class="waves-effect white-text" href="#new-project"> New Project </a></li>
+                    <li><i class="waves-effect fa fa-envelope" aria-hidden="true" id="dropLogo"></i></li>
+                    <li><a href="#!" style="color: white"><i class=" waves-effect fa fa-cog " aria-hidden="true"
+                                                             id="dropLogo"></i>Settings</a></li>
+                    <li class="divider"></li>
+                    <li><a href="/logout " style="color: white"><i class=" waves-effect fa fa-sign-out "
+                                                                   aria-hidden="true" id="dropLogo"></i>Logout</a></li>
+                </ul>
+
+            </div>
+        </nav>
+
+    </div>
+
+    <nav id="secondary-nav" class="fixed">
+        <div class="row nav-wrapper" id="nav-bar-secondary">
+            <div class="col s10 m4 l3 offset-l2">
+                <a href="#new-project" title="New Project" class="modal-trigger"><i class=" waves-effect fa fa-plus"
+                                                                                    aria-hidden="true"
+                                                                                    id="new-logo"></i></a>
+            </div>
+
+            <ul class="right" id="nav-bar-right">
+                <li><a title="Delete" class="right" id="delete-project"><i class=" waves-effect fa fa-trash logo"
+                                                                           aria-hidden="true"></i></a></li>
+                <li>
+                    <form id="download-project-form" method="post" action="/download">
+                        <input type="hidden" id="download-project-id" name="download-project-id"/>
+                    </form>
+                    <a href="#" title="Download" id="download-project" class="right"><i
+                            class="waves-effect fa fa-download logo" aria-hidden="true" id="logo"></i>
+                    </a>
+                </li>
+                <li><a href="#rename-project" title="Rename" class=" modal-trigger waves-effect waves-light right"
+                       id="logoRename"><i class=" waves-effect fa fa-pencil-square-o logo" aria-hidden="true"
+                                          id="logo"></i></a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div id="rename-project" class="modal center-align">
+        <div class="modal-content" id="renameModal">
+            <h4 style="font-family: 'EB garamond', sans-serif;" class="red-text">Rename Project</h4>
+            <div class="rowcenter-align">
+                <form id="rename-project-form">
+                    <div class="input-field col s6 offset-s3">
+                        <input id="new_project_name" name="new_project_name" type="text" class="validate">
+                        <label class="active" for="rename">New Project Name</label>
+                    </div>
+                    <div class="input-field center-align">
+                        <input type="submit" value="Submit" class="btn waves-effect waves-light modal-action modal-close"/>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        <div class="modal-footer center-align">
+            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat center-align">Close</a>
+        </div>
+    </div>
+
+    <div id="notificationModal" class="modal">
+        <div class="modal-content">
+            <div class="row">
+                <div class="s12 center-align" style="padding-bottom: 20px;"><h4>New Notifications</h4></div>
+
+                {% for r in requests %}
+                    <div class="s12" style="margin-bottom: 15px;">
+                        <div class="request-meta hide">
+                            <p class="request-project-id">{{ r['projectId'] }}</p>
+                            <p class="request-user-id">{{ r['userId'] }}</p>
+                        </div>
+                        <h6 style="display: inline"> {{ r['userName'] }} wants to contribute to {{ r['projectName'] }}</h6>
+                        <p style="display: inline;margin-left: 30%;" ><a href="" class="accept-decline" id="1" >Accept</a></p>
+                        <p style="display: inline;margin-left: 2%"><a href="" class="accept-decline" id="0" >Decline</a></p><br>
+                        <hr>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="content-main">
+
+        <ul class="side-nav tabs large-screen fixed default-primary-color">
+            <li class="tab"><a class="waves-effect white-text active" href="#all-projects"> All
+                Projects({{ count['allProjects'] }}) </a></li>
+            <li class="tab"><a class="waves-effect white-text" href="#my-projects"> My Projects
+                ({{ count['myProjects'] }})</a></li>
+            <li class="tab"><a class="waves-effect white-text" href="#projects-shared"> Shared Projects
+                ({{ count['sharedProjects'] }})</a></li>
+            <li class="tab"><a class="waves-effect white-text" href="#search-project"> Browse Projects</a></li>
+        </ul>
+
+
+        <div id="all-projects" class="tab-content">
+            <div class="row">
+
+                {% for i in aggregate %}
+                    <div class="col l12 m12 s12">
+                        <h4 style="font-family: EB garamond, sans-serif; text-decoration: underline; text-transform: capitalize">{{ i['_id'] }}</h4>
+                    </div>
+
+                    {% for j in range((i['projectName']|length)) %}
+
+                        <div class="col l2 m4 s6 offset-m1 center-align">
+                            <div class="single-project-listing center-align" id="{{ i['projectId'][j] }}">
+                                <a href="#"><i class="fa fa-folder" aria-hidden="true" id="projFolder"></i></a>
+                            </div>
+                            <p>{{ i['projectName'][j] }}</p>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+
+
+        <div id="my-projects" class="tab-content">
+            <div class="row">
+
+                {% for i in proj_list %}
+                    {% if ""~user['_id'] == i['owner'] %}
+                        <div class="col l2 m4 s6 offset-m1 center-align">
+                            <div class="single-project-listing center-align" id="{{ i['_id'] }}">
+                                <a href="#"><i class="fa fa-folder" aria-hidden="true" id="projFolder"></i></a>
+                            </div>
+                            <p>{{ i['projectName'] }}</p>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div id="projects-shared" class="tab-content">
+            <div class="row">
+                {#                    {{ proj_list|length }}#}
+                {#                    {% if proj_list != none %}#}
+                {#                        {{ proj_list }}#}
+                {% for i in proj_list %}
+                    {% if ""~user['_id'] != i['owner'] %}
+                        <div class="col l2 m4 s6 offset-m1 center-align">
+                            <div class="single-project-listing center-align" id="{{ i['_id'] }}">
+                                <a href="#"><i class="fa fa-folder" aria-hidden="true" id="projFolder"></i></a>
+                            </div>
+                            <p>{{ i['projectName'] }}</p>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                {#                    {% endif %}#}
+            </div>
+        </div>
+
+        <div id="search-project" class="tab-content">
+            <div class="row" style="background-color:darkslategrey; margin-right: 20px">
+                <form id="searchForm">
+                    <div class="col l4 m4 s12 center-align">
+                        <label style="color: white;">Domain</label>
+                        <select multiple id="multiselection">
+
+                            <option value="Networking">Networking</option>
+                            <option value="Database">Database</option>
+
+                            <option value="MobileComputing">Mobile Computing</option>
+                            <option value="CloudComputing">Cloud Computing</option>
+                            <option value="Internetofthings">Internet of things</option>
+                            <option value="NetworkSecurity">Network Security</option>
+                            <option value="InformationSecurity">Information Security</option>
+                            <option value="OperatingSystems">Operating Systems</option>
+
+                            <option value="WebMining">Web Mining</option>
+                            <option value="SoftComputing">Soft Computing</option>
+
+
+                            <option value="SoftwareEngineering">Software Engineering</option>
+                            <option value="GIS">GIS</option>
+
+                            <option value="BioInformatics">BioInformatics</option>
+                            <option value="MachineLearning/NLP">Machine Learning/NLP</option>
+
+                            <option value="SoftwareTesting">Software Testing</option>
+                            <option value="SoftwareArchitecture">Software Architecture</option>
+
+                            <option value="3DModelling">3D Modelling</option>
+                            <option value="BigDataAnalysis">Big Data Analysis</option>
+
+                            <option value="DataAnalytic">Data Analytic</option>
+
+                            <option value="WebEngineering">Web Engineering</option>
+                            <option value="RoboticsProgramming">Robotics Programming</option>
+
+
+                        </select>
+                    </div>
+                    <div class="col l6 m6 s12" style="padding-right: 0px;">
+
+                        <nav style="margin-top: 12px; background-color: white;">
+                            <div class="nav-wrapper">
+                                <div class="input-field">
+                                    <input id="search" type="search" required><label for="search"><i
+                                        class="fa fa-search" style="font-size: 25px; color: black"></i></label>
+                                    <!-- I've put "red-text" class to emphasize -->
+                                </div>
+                            </div>
+                        </nav>
+
+                    </div>
+
+                    <div class="col l2 m2 s12 " style="padding-left: 0px">
+                        <input type="submit" value="submit" id="submitButton" class="btn"
+                               style="margin-top: 7%; height: 64px; border-radius: 0px;">
+                    </div>
+                </form>
+            </div>
+
+            <div class="row" id="foundResults">
+            </div>
+
+            <div id="requestJoin" class="modal">
+                <div class="modal-content">
+                    <div class="hide" id="searched-project-id"></div>
+
+                    <div class="description-container"></div>
+
+                    <h4>Send Project owner a request to join</h4>
+                    <a class="waves-effect waves-light btn send-request">Send</a>
+                    <a class="waves-effect waves-light btn modal-close">Cancel</a>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="new-project" class="modal" style="position: absolute;">
+            <div class="modal-content">
+                <form class="col s12" id="new_project" >
+                    <h2 class="center-align heading red-text"> Add New Project </h2>
+
+                    <div class="row">
+                        <div class="input-field col s10 offset-s1">
+                            <input placeholder="Placeholder" id="project-name" name="project-name" type="text"
+                                   class="validate"/>
+                            <label for="first_name">Project Name</label>
+                        </div>
+                        <div class="input-field col s10 offset-s1">
+                            <textarea id="project-description" name="project-description"
+                                   class="materialize-textarea"> </textarea>
+                            <label for="project-description">Project Description</label>
+                        </div>
+
+                        <div class="input-field col s10 offset-s1">
+
+                            <select name="domain" id="domain">
+                                <option value="none" disabled selected>Select Technology</option>
+                                <option value="Networking">Networking</option>
+                                <option value="Database">Database</option>
+
+                                <option value="MobileComputing">Mobile Computing</option>
+                                <option value="CloudComputing">Cloud Computing</option>
+                                <option value="Internetofthings">Internet of things</option>
+                                <option value="NetworkSecurity">Network Security</option>
+                                <option value="InformationSecurity">Information Security</option>
+                                <option value="OperatingSystems">Operating Systems</option>
+
+                                <option value="WebMining">Web Mining</option>
+                                <option value="SoftComputing">Soft Computing</option>
+
+
+                                <option value="SoftwareEngineering">Software Engineering</option>
+                                <option value="GIS">GIS</option>
+
+                                <option value="BioInformatics">BioInformatics</option>
+                                <option value="MachineLearning/NLP">Machine Learning/NLP</option>
+
+                                <option value="SoftwareTesting">Software Testing</option>
+                                <option value="SoftwareArchitecture">Software Architecture</option>
+
+                                <option value="3DModelling">3D Modelling</option>
+                                <option value="BigDataAnalysis">Big Data Analysis</option>
+
+                                <option value="DataAnalytic">Data Analytic</option>
+
+                                <option value="WebEngineering">Web Engineering</option>
+                                <option value="RoboticsProgramming">Robotics Programming</option>
+
+                            </select>
+                            <label for="category">Domain</label>
+                        </div>
+
+                        <div class="col s10 offset-s1 input-field">
+                            <span class="chip-label"> Technologies used </span>
+                            <div class="chips chips-placeholder" id="technologies"></div>
+                        </div>
+
+                        <div class="input-field col s10 offset-s1">
+                            <ul id="member-list">
+                            </ul>
+
+                            <input type="text" name="member-name" id="member-name" placeholder="Username"/>
+                            <label for="member-name">Members</label>
+                            <a id="members-form-submit"
+                               class="btn-floating btn-large waves-effect waves-light red" href="#"> <i
+                                    class="fa fa-2x fa-user-plus white-text    "></i> </a>
+
+                        </div>
+
+                        <div class="input-field col s10 offset-s1 center-align">
+                            <p style="display: inline; margin-right: 20px;">
+                                <input name="type" type="radio" id="type1" value="private" />
+                                <label for="type1">Private Repository</label>
+                            </p>
+                            <p style="display: inline">
+                                <input name="type" type="radio" id="type2" value="public" />
+                                <label for="type2">Public Repository</label>
+                            </p>
+                        </div>
+
+                        <div class="input-field center-align col s11" style="padding-top: 30px;">
+                            <input type="submit" value="Submit" class="btn waves-effect waves-light"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+<script rel="script" type="text/javascript"
+        src="{{ url_for( 'static' , filename='js/jquery-3.1.0.min.js') }}"></script>
+<script rel="script" type="text/javascript"
+        src="{{ url_for ('static', filename='js/materialize.min.js') }} "></script>
+<script rel="script" type="text/javascript" src="{{ url_for('static' , filename='js/script.js') }}"></script>
+
+</body>
+</html>

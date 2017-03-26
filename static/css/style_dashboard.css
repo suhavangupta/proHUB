@@ -1,0 +1,191 @@
+/* Tabs Style */
+
+ul.tabsnew {
+    width: 70% !important;
+    margin: auto;
+}
+
+/* File structure */
+
+.project-directory{
+    width: 100%;
+}
+.project-directory td {
+    padding-left: 5%;
+}
+
+.project-directory td p {
+    display : inline;
+    margin-left: 3%;
+}
+
+.commit-log-div {
+    display:none;
+    width : 0;
+    position: fixed;
+    top: 260px;
+    right: 0;
+    height: 600px;
+    overflow-y: scroll;
+    padding: 0 2%;
+}
+
+#changeTab
+{
+
+}
+
+.left-sidebar {
+    width: 15%;
+
+    height : 600px;
+    top: 64px;
+
+    padding-top : 20px;
+    top: 64px; 
+}
+
+.left-sidebar a {
+    width:100%;
+    margin-top:20px;
+
+}
+
+/* For user image in navbar */
+#userImage
+{
+    height: auto;
+    width: 12%;
+    vertical-align: center;
+    padding-top: 18px;
+    float: left;
+}
+
+
+/* For dropdown */
+#dropdown1{
+    top: 64px !important;
+}
+
+#dropLogo {
+    color:darkslategrey;
+    font-size: 14px;
+    padding-right: 10px;
+}
+
+/* Right Scrren */
+
+.content-main {
+    padding-top: 40px;
+    margin-left: 15%;
+}
+/* For side nav */
+
+.side-nav.large-screen {
+    top: 64px;
+}
+
+.side-nav.tabs {
+    height: 100%;
+    display: block;
+    width: 15% !important;
+}
+
+.tabs .tab a {
+    text-align: left;
+}
+
+.side-nav.tabs li {
+    width: 100% !important;
+}
+
+.side-nav.tabs .indicator {
+    display: none;
+}
+
+.side-nav.tabs li a.active {
+    background-color: #eeeeee;
+    color:black !important;
+    border-right: 4px solid white;
+}
+
+/* For secondary nav-bar */
+
+#new-logo
+{
+    color:white !important;
+    font-size: 25px;
+  /*margin: 4% 3% 4% 3%;*/
+    float:left;
+    margin: auto;
+}
+.logo
+{
+  color:white !important;
+  font-size: 25px;
+  margin: 4% 3% 4% 3%;
+
+}
+#secondary-nav {
+    background-color: #00695C;
+}
+#secondary-nav h4 {
+    margin-top: 0;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    text-transform: uppercase;
+    display: inline;
+}
+
+#secondary-nav i {
+    display: inline;
+    font-size: 25px;
+}
+
+#secondary-nav a.project-description {
+    display: block;
+    height: 64px;
+}
+
+#secondary-nav a.project-description:hover {
+    background-color: #00b8d4;
+}
+
+
+/* Project description modal */
+input#member-name {
+    width: 80%;
+    margin-right: 5%;
+    float: left;
+}
+
+div.member-panel {
+    padding: 2% 5%
+}
+
+div.member-panel:hover {
+    background-color: rgba(0,0,0,0.1);
+    cursor: pointer;
+}
+
+.breadcrumb {
+    color: rgba(0,0,0,0.5);
+
+}
+
+.breadcrumb:last-child {
+    color: #000;
+}
+
+.breadcrumb::before {
+    color: rgba(0,0,0,0.5);
+}
+
+/* Create new branch modal */
+
+.select-members ul li{
+    width: 50%;
+    float: left;
+    clear: none;
+}
+

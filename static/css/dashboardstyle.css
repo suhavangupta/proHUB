@@ -1,0 +1,283 @@
+/* All THe styles go  here */
+
+/* Global Styles - used throughout the website */
+body
+{
+    background-color: #EEEEEE;
+    font-family: Roboto, sans-serif;
+}
+
+.fixed {
+    position: fixed;
+}
+
+/* Navbar */
+
+nav {
+	padding : 0 2%;
+}
+
+/* Left sidebar */
+
+.left-sidebar {
+    width: 15%;
+
+    height : 600px;
+    top: 64px;
+
+    padding-top : 20px;
+    top: 64px; 
+}
+
+.left-sidebar a {
+    width:100%;
+    margin-top:20px;
+
+}
+
+/* Right Scrren */
+
+.content-main {
+    /*width: 100%;*/
+    padding-left: 20%;
+    padding-top: 40px;
+    min-height: 600px;
+}
+
+.spacer {
+    height: 10px
+}
+
+/* Project Listing screen styles */
+
+.single-project-listing {
+    border: 2px solid grey;  /* Accent Color */
+    height: 100px;
+    width: 90%;
+    margin: 20px auto;
+    background-color: white;
+    -webkit-box-shadow: 7.5px 0 5px -2px #888;
+    box-shadow: 7.5px 0 5px -2px #888;
+
+}
+
+#userImage
+{
+    height: auto;
+    width: 12%;
+    vertical-align: center;
+    padding-top: 18px;
+    float: left;
+}
+
+#projFolder {
+    color:grey;
+    font-size: 60px;
+    margin-top: 12%;
+}
+
+
+/* For side nav */
+.side-nav.large-screen {
+    top: 64px;
+
+}
+
+ul.tabs {
+    height: 100%;
+    display: block;
+    width: 15% !important;
+}
+
+.tabs .tab a {
+    text-align: left;
+}
+
+ul.tabs li {
+    width: 100% !important;
+}
+
+ul.tabs .indicator {
+    display: none;
+}
+
+ul.tabs li a.active {
+    background-color: #eeeeee; 
+    color:black !important;
+    border-right: 4px solid white;
+}
+
+input#member-name {
+    width : 80%;
+    margin-right: 5%;
+    float: left;
+}
+
+a#members-form-submit {
+    float: left;
+}
+
+.heading {
+    font-family: "EB garamond", sans-serif ;
+}
+
+::-webkit-input-placeholder {
+    color: #FF0000;
+    opacity: 0.45 !important; /* for chrome */
+}
+
+:-moz-placeholder { /* Firefox 18- */
+    color: #FF0000;
+    opacity: 0.45;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+    color: #FF0000;
+    opacity: 0.45;
+}
+
+:-ms-input-placeholder {
+   color: #FF0000;
+   opacity: 0.45;
+}
+
+/* label color */
+.input-field label {
+ color: black;
+}
+
+ /*label focus color */
+
+.input-field input[type=text]:focus + label, .input-field textarea:focus + label {
+ color: red !important;
+}
+/* label underline focus color */
+.input-field input[type=text]:focus, .input-field textarea:focus {
+ border-bottom: 1px solid red !important;
+ box-shadow: 0 1px 0 0 red !important;
+}
+/* valid color */
+.input-field input[type=text].valid {
+ border-bottom: 1px solid red !important;
+ box-shadow: 0 1px 0 0 red !important;
+}
+/* invalid color */
+.input-field input[type=text].invalid {
+ border-bottom: 1px solid red;
+ box-shadow: 0 1px 0 0 red;
+}
+/* icon prefix focus color */
+.input-field .prefix.active {
+    color: red;
+}
+
+.chips.focus {
+    border-bottom: 1px solid red !important;
+    box-shadow: 0 1px 0 0 red !important;
+}
+
+.chips.focus  {
+    color : red !important;
+}
+
+        
+
+#nav-bar-secondary {
+    /*/*height: 40px;*/
+    margin-bottom: 0;
+}
+
+#new-logo
+{
+    color:white !important;
+    font-size: 25px;
+  /*margin: 4% 3% 4% 3%;*/
+    float:left;
+    margin: auto;
+}   
+.logo
+{
+  color:white !important;
+  font-size: 25px;
+  margin: 4% 3% 4% 3%;
+ 
+}
+
+#nav-bar-right
+{
+    /*float:right;*/
+    display: none;
+
+}
+
+#nav-bar-right a {
+    vertical-align: middle;
+}
+
+/* For right nav bar menus */
+
+#rename-project
+{
+    width: 30%;
+}
+
+
+#renameModal
+{
+    padding-bottom: 0px;
+}
+
+#secondary-nav {
+    background-color: #00695C;
+}
+
+/* For chips part in input modal */
+.chips input {
+    margin: 0;
+}
+
+.chip-label {
+    font-size: 0.8rem;
+
+}
+
+/* For dropdown  */
+
+#dropdown1{
+    top: 64px !important;
+}
+
+#dropLogo
+{
+    color:darkslategrey;
+    font-size: 14px;
+    padding-right: 10px;
+}
+/*.modal-trigger */
+/*{*/
+    /*clear: both;*/
+/*}*/
+
+/*.modal { max-height: 95% !important } !* increase the width and height! *!*/
+
+[type="radio"]+label:before, [type="radio"]+label:after {
+    position: static !important;
+}
+
+[type="radio"]+label:before {
+    padding: 0 3.5%;
+}
+
+[type="radio"]:checked+label:before {
+    border-color : #26a69a;
+    background-color: #26a69a;
+}
+
+[type="radio"]+label:after {
+    border: none !important;
+}
+
+[type="radio"]:not(:checked)+label, [type="radio"]:checked+label {
+    padding-left: 0;
+    width: 47%;
+}

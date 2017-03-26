@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{project['projectName']}} - ProHub</title>
+{#    <title>ProHub</title>#}
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/materialize.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/palette.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/font-awesome.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style_dashboard.css') }}"/>
+</head>
+
+<body>
+
+{######################################## Hidden Fields ###############################################}
+    <div id="project_id" class="hide">{{ project['_id'] }}</div>
+    <div id="current_branch" class="hide">{{ current_branch }}</div>
+
+{####################################### Navigation Bar ###################################################}
+    <div class="navbar-fixed">
+        <nav class="dark-primary-color">
+            <div class="nav-wrapper">
+                <a href="/" class="brand-logo garamond"><strong>proHub</strong></a>
+                <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+                <ul class="right hide-on-med-and-down">
+
+                    <li style="float:right;"><a class='dropdown-button' href="#" data-activates='dropdown1'><img
+                            src="{{ url_for('static' , filename='images/userimage.png') }}"
+                            class="responsive-img circle"
+                            id="userImage"/><span><strong>Howdy {{ user_name }}</strong></span></a>
+
+                            <ul id='dropdown1' class='dropdown-content'>
+            {#                    <li><a href="#!"><i class=" waves-effect fa fa-camera " aria-hidden="true" id="dropLogo"></i>Change#}
+            {#                        Pic</a></li>#}
+            {#                    <li><a href="#!"><i class=" waves-effect fa fa-cog " aria-hidden="true"#}
+            {#                                        id="dropLogo"></i>Settings</a></li>#}
+            {#                    <li class="divider"></li>#}
+                                  <li><a href="/logout"><i class=" waves-effect fa fa-sign-out " aria-hidden="true" id="dropLogo"></i>Logout</a>
+                                  </li>
+
+                            </ul>
+                    </li>
+
+                </ul>
+
+
+
+                <ul class="side-nav" id="mobile-demo">
+
+                    <li style="float:right;"><a href="#" data-activates='dropdown1' class='dropdown-button '><img
+                            src="{{ url_for('static' , filename='images/userimage.png') }}"
+                            class="responsive-img circle"
+                            id="userImage"/><span><strong>Howdy {{ user_name }}</strong></span></a>
+                    </li>
+
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <nav id="secondary-nav">
+        <div class = "row nav-wrapper" id ="nav-bar-secondary">
+            <div class="col s10 m4 l3 offset-l2" >
+                <a href="#new-file-folder"  id="new-folder" title = "New Folder" class="modal-trigger new-file-folder"><i class="material-icons">create_new_folder</i></a>
+                <a href="#new-file-folder" id="new-file" title = "New File" class="modal-trigger new-file-folder"><i class="material-icons">folder</i></a>
+            </div>
+
+            <a class="project-description col s10 m4 l3 modal-trigger" href="#project-description" >
+                <h4>{{ project['projectName'] }}</h4> &nbsp; &nbsp; <i class="material-icons">apps</i>
+            </a>
+
+        </div>
+    </nav>
+
+    <div class="modal" id="new-file-folder">
+        <div class="modal-content">
+            <div class="row">
+                <h2></h2>
+
+                <form class="create-new-form" action="/create-new" id="" >
+                    <div class="row">
+                        <div class="input-field col s10">
+                            <input type="text" name="name" id="name" />
+                            <label for="name"> Name </label>
+                        </div>
+
+                        <input type="submit" name="submit" class="btn waves-effect waves-default modal-action modal-close" value="Submit" />
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal" id="project-description">
+        <div class="row">
+            <div class="col s12 center-align">
+                <h3> {{ project['projectName'] }}</h3>
+            </div>
+
+            <div class="col s12 center-align">
+                <p> {{ project['projectDescription'] }} </p>
+            </div>
+
+            <div class="col s10 offset-s1 project-members">
+                {% for m in members %}
+                    <div class="member-panel" id="{{ m['_id'] }}">{{ m['userName'] }} <i class="fa fa-close right remove"></i> </div>
+                {% endfor %}
+
+                  <input type="text" name="member-name" id="member-name"  placeholder="Add User ... "/>
+                  <a id="members-form-submit" class="btn-floating btn-large waves-effect waves-light red" href="#"> <i class="fa fa-2x fa-user-plus white-text    "></i> </a>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    {#<h1>{{project['projectName']}}</h1>#}
+    <div class="center-align">
+        <a class="btn waves waves-effect right commit-log right-align" style="margin-right: 3%;margin-top: 15px;margin-bottom: 15px;"> Commit Log </a>
+    </div>
+
+
+
+    {#<div class="row" id="changeTab">#}
+    {#    <div class="col s10 offset-s2">#}
+    {#        <ul class="tabs tabsnew">#}
+    {#            <li class="tab col s3"><a class="active" href="#project-board">Project Board</a></li>#}
+    {#            <li class="tab col s3"><a href="#source-code">Source Code</a></li>#}
+    {#        </ul>#}
+    {#    </div>#}
+    {#</div>#}
+
+    <div class="content-main">
+        <ul class="side-nav tabs large-screen fixed default-primary-color">
+            <li class="no-padding">
+                <ul class="collapsible collapsible-accordion">
+                  <li>
+                  <a class="waves-effect white-text collapsible-header" href="#project-branches">BRANCHES</a>
+                    <div class="collapsible-body" id="project-branches">
+                      <ul>
+                          {%  for b in project['branches'] %}
+                            <li class="tab"> <a class="waves-effect white-text branches">{{ b['branch_name'] }}</a></li>
+                          {% endfor %}
+                      </ul>
+                    </div>
+                  </li>
+                </ul>
+            </li>
+            <li class="divider"></li>
+            <li class="tab"> <a class="waves-effect white-text modal-trigger" href="#new-branch">Create New Branch</a></li>
+            <li class="tab"> <a class="waves-effect white-text modal-trigger" href="#commit-changes">Commit Changes</a></li>
+            <li class="tab"> <a class="waves-effect white-text" id="merge">Merge to Master</a></li>
+        </ul>
+
+        <div class="row">
+            <div id="source-code" class="col s12">
+
+            <nav>
+                <div class="nav-wrapper">
+                    <div class="col s12 breadcrumbs-div">
+                        <a href="" class="breadcrumb"> {{ project['projectName'] }} </a>
+                    </div>
+                </div>
+            </nav>
+
+
+                <table class="bordered highlight responsive-table project-directory">
+                    <tbody>
+                        {% for d in list_dir['directories'] %}
+                            <tr class="folders">
+                                <td> <i class="fa fa-folder"></i> <p>{{ d }}/</p>
+                                    <a class="download-path right" href="" style="margin: 5px;">Download</a>
+                                    <a class="delete-path right" href="" style="margin: 5px;">Delete</a>
+                                    <a class="edit right modal-trigger" href="#edit-modal" style="margin: 5px;">Edit</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+
+                        {% for f in list_dir['files'] %}
+                            <tr class="files">
+                                <td>
+                                    <i class="fa fa-file-code-o"></i> <p>{{ f }}</p>
+                                        <a class="download-path right" href="" style="margin: 5px;">Download</a>
+                                        <a class="delete-path right" href="" style="margin: 5px;">Delete</a>
+                                        <a class="edit right modal-trigger" href="#edit-modal" style="margin: 5px;">Edit</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <div class="commit-log-div">
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{#   Add New branch modal #}
+    <div class="modal" id="new-branch">
+        <div class="modal-content">
+            <div class="row">
+                <h3 class="center-align"> Create New Branch </h3>
+
+                <form name="add-new-branch" id="add-new-branch">
+                    <div class="input-field col s10 offset-s1">
+                        <input placeholder="Branch Name" name="branch-name" id="branch-name" type="text" class="validate">
+                        <label for="branch-name">Branch Name</label>
+                    </div>
+
+                    <div class="input-field col s10 offset-s1 select-members">
+                        <select multiple name="members" id="members">
+                            <option value="" disabled selected class="col s6">Select Members</option>
+                            {% for m in members  %}
+                                <option value="{{ m['_id'] }}" class="col s6">{{ m['userName'] }}</option>
+                            {% endfor %}
+                        </select>
+
+                        <label>Select Members</label>
+                    </div>
+
+                    <div class="center-align">
+                        <input type="submit" name="submit" class="btn waves-effect waves-light modal-action modal-trigger" value="Submit" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{#  Editor modal  #}
+    <div class="modal" id="edit-modal">
+        <div id="file-path" class="hide"></div>
+        <div id="code" class="hide"></div>
+        <div class="small-nav fixed">
+            <a class="btn waves-effect waves-light save modal-action modal-close"> <i class="fa fa-check"></i> </a>
+            <a class="btn waves-effect waves-light modal-action modal-close" style="float:right;" style="display: inline;"> <i class="fa fa-close"></i> </a>
+        </div>
+
+        <div id="editor" style="height: 400px">
+        </div>
+
+    </div>
+
+    <div class="modal" id="commit-changes">
+        <div class="modal-content">
+            <form id="commit-changes-form">
+                <h3 class="center-align">Commit</h3>
+                <div class="col s10 input-field">
+                    <input type="text" name="commit-message" placeholder="Commit Message" />
+                </div>
+
+                <div class="input-field center-align">
+                    <input type="submit" name="submit" value="Commit" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-------------------------------------- Tabs end ------------------------------------------------>
+
+    <!----------------------------------- Tabs togglable content ------------------------------------->
+
+
+    <!------------------------------------ Tabs toggleable content ends -------------------------------->
+
+    <script rel="script" type="text/javascript" src="{{ url_for('static' , filename='js/jquery-3.1.0.min.js') }}" ></script>
+    <script rel="script" type="text/javascript" src="{{ url_for('static' , filename='js/materialize.min.js' ) }}"></script>
+    <script src="{{ url_for('static', filename='js/ace-builds-master/src-noconflict/ace.js') }}" type="text/javascript" charset="utf-8"></script>
+    <script>
+        var editor = ace.edit("editor");
+        editor.setTheme("ace/theme/monokai");
+        editor.getSession().setMode("ace/mode/javascript");
+    </script>
+    <script rel="script" type="text/javascript" src="{{ url_for('static' , filename='js/script_dashboard.js' ) }}"></script>
+
+
+
+</body>
+</html>
